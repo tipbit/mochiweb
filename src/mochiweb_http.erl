@@ -113,7 +113,9 @@ request(Socket, Body, Prev) ->
                 {ok, {http_error, "\n"}, <<>>} ->
                     request(Socket, Body, <<>>);
                 {more, _} ->
-                    request(Socket, Body, FullBin)
+                    request(Socket, Body, FullBin);
+                _ ->
+                    handle_invalid_request(Socket)
             end;
         {tcp_closed, _} ->
             mochiweb_socket:close(Socket),
