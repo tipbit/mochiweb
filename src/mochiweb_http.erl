@@ -190,7 +190,9 @@ parse_headers(Socket, Request, Body, Bin, Headers) ->
             handle_invalid_request(Socket, Request, Headers);
         {error, _Reason} ->
             mochiweb_socket:close(Socket),
-            exit(normal)
+            exit(normal);
+        _ ->
+            handle_invalid_request(Socket, Request, Headers)
     end.
 
 call_body({M, F, A}, Req) ->
